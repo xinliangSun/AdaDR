@@ -1,3 +1,4 @@
 # AdaDR
 
-run main.py 
+# How to use
+run drug_train.py 
