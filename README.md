@@ -1,2 +1,3 @@
 # AdaDR
 
+run main.py 
