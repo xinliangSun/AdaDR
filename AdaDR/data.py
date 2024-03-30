@@ -354,13 +354,7 @@ class DrugDataLoader(object):
             test_pos_edge = np.stack([pos_row[test_pos_idx], pos_col[test_pos_idx]])
             test_pos_values = [1] * len(test_pos_edge[0])
 
-            
-            # test positive and test negative ration is 1:1
-            test_neg_edge = np.stack([neg_row[test_neg_idx][0:len(test_pos_values)],
-                                    neg_col[test_neg_idx][0:len(test_pos_values)]])
-
-            
-
+            test_neg_edge = np.stack([neg_row[test_neg_idx], neg_col[test_neg_idx]])
             # test_neg_edge = np.stack([neg_row[test_neg_idx], neg_col[test_neg_idx]])
             test_neg_values = [0] * len(test_neg_edge[0])
 
