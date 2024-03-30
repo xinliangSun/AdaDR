@@ -63,9 +63,6 @@ def train(args, dataset, graph_data, cv):
         loss = rel_loss(pred_ratings, train_gt_ratings) + \
                args.beta * loss_com_dis + args.beta * loss_com_drug
 
-        # no common loss
-        # loss = rel_loss(pred_ratings, train_gt_ratings)
-
         optimizer.zero_grad()
         loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(), args.train_grad_clip)
@@ -80,14 +77,6 @@ def train(args, dataset, graph_data, cv):
 
         if iter_idx % args.train_valid_interval == 0:
             print("test-logging_str", logging_str)
-
-    result = {
-        "y_score": score,
-        "y_true": true
-    }
-    data_result = pd.DataFrame(result)
-
-    data_result.to_csv(os.path.join(args.save_dir, '%d_result.csv' % int(cv + 1)), index=False)
 
     end = time.perf_counter()
 
