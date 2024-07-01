@@ -60,23 +60,23 @@ class GCMCLayer(nn.Module):
         multi-gpu training
     """
 
-    def __init__(self, rating_vals,  # [0, 1]
-                 user_in_units,  # 909
-                 movie_in_units,  # 909
-                 msg_units,  # 1800
-                 out_units,  # 75
-                 dropout_rate=0.0,  # 0.3
-                 agg='stack',  # 'sum'
-                 agg_act=None,  # Tanh()
-                 ini=True, share_user_item_param=False,  # True
-                 basis_units=4, device=None):  # True 4
+    def __init__(self, rating_vals,
+                 user_in_units, 
+                 movie_in_units, 
+                 msg_units, 
+                 out_units, 
+                 dropout_rate=0.0,  
+                 agg='stack',
+                 agg_act=None,
+                 ini=True, share_user_item_param=False, 
+                 basis_units=4, device=None):
         super(GCMCLayer, self).__init__()
-        self.rating_vals = rating_vals  # [0, 1]
-        self.agg = agg  # sum
-        self.share_user_item_param = share_user_item_param  # True
-        self.ufc = nn.Linear(msg_units, out_units)  # Linear(in_features=1800, out_features=75, bias=True)
-        self.user_in_units = user_in_units  # 909
-        self.msg_units = msg_units  # 1800
+        self.rating_vals = rating_vals  
+        self.agg = agg 
+        self.share_user_item_param = share_user_item_param 
+        self.ufc = nn.Linear(msg_units, out_units)  
+        self.user_in_units = user_in_units
+        self.msg_units = msg_units
         if share_user_item_param:
             self.ifc = self.ufc
         else:
@@ -87,22 +87,22 @@ class GCMCLayer(nn.Module):
             assert msg_units % len(rating_vals) == 0
             msg_units = msg_units // len(rating_vals)
         if ini:
-            msg_units = msg_units // 3  # 600
-        self.msg_units = msg_units  # 600
+            msg_units = msg_units // 3 
+        self.msg_units = msg_units 
         self.dropout = nn.Dropout(dropout_rate)
         self.W_r = {}
         subConv = {}
-        self.basis_units = basis_units  # 4
-        self.att = nn.Parameter(th.randn(len(self.rating_vals), basis_units))  # [2, 4]
-        self.basis = nn.Parameter(th.randn(basis_units, user_in_units, msg_units))  # [4, 909, 600]
+        self.basis_units = basis_units 
+        self.att = nn.Parameter(th.randn(len(self.rating_vals), basis_units)) 
+        self.basis = nn.Parameter(th.randn(basis_units, user_in_units, msg_units))
         for i, rating in enumerate(rating_vals):
             # PyTorch parameter name can't contain "."
             rating = to_etype_name(rating)
             rev_rating = 'rev-%s' % rating
             if share_user_item_param and user_in_units == movie_in_units:
-                subConv[rating] = GCMCGraphConv(user_in_units,  # 909
-                                                msg_units,  # 840
-                                                weight=False,  # False
+                subConv[rating] = GCMCGraphConv(user_in_units,
+                                                msg_units, 
+                                                weight=False, 
                                                 device=device,
                                                 dropout_rate=dropout_rate)
                 subConv[rev_rating] = GCMCGraphConv(user_in_units,
@@ -188,8 +188,8 @@ class GCMCGraphConv(nn.Module):
                  device=None,
                  dropout_rate=0.0):
         super(GCMCGraphConv, self).__init__()
-        self._in_feats = in_feats  # 909
-        self._out_feats = out_feats  # 600
+        self._in_feats = in_feats 
+        self._out_feats = out_feats 
         self.device = device
         self.dropout = nn.Dropout(dropout_rate)
 
