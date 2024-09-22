@@ -1,4 +1,5 @@
-# AdaDR
+# AdaDR: Drug repositioning with adaptive graph convolutional networks
+<img src="img/main.png" alt="alt" title="title">
 
 # Requirments
 ```
