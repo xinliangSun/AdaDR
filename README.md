@@ -13,6 +13,7 @@ run drug_train.py
 ```
 
 # How to cited
+```
 @article{sun2024drug,
   title={Drug repositioning with adaptive graph convolutional networks},
   author={Sun, Xinliang and Jia, Xiao and Lu, Zhangli and Tang, Jing and Li, Min},
@@ -23,3 +24,4 @@ run drug_train.py
   year={2024},
   publisher={Oxford University Press}
 }
+```
